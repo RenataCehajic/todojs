@@ -40,3 +40,72 @@ function updateCounters() {
   for (let i = 0; i < checkboxes.length; i++) {
     checkboxes[i].addEventListener("change", toggleDone);
   }
+
+  document
+  .querySelector("form")
+  .addEventListener("submit", function addNewTodo(event) {
+    event.preventDefault();
+    console.log("hello");
+  });
+
+  function createTodo(title) {
+    // create a label
+    const label = document.createElement("label");
+    // create a checkbox
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = false;
+    // add the "change" event listener to the checkbox
+    checkbox.addEventListener("change", toggleDone);
+    // and add the checkbox to the label
+    label.appendChild(checkbox);
+  
+    // create a text node with the given title
+    const labelText = document.createTextNode(" " + title);
+    // and add the text node to the label
+    label.appendChild(labelText);
+  
+    // create a list item
+    const listItem = document.createElement("li");
+    listItem.className = "todo";
+    // and add the label to it
+    listItem.appendChild(label);
+  
+    // add the list item to the todo list
+    const list = document.getElementById("todolist");
+    list.appendChild(listItem);
+  }
+  
+  document
+    .querySelector("form")
+    .addEventListener("submit", function addNewTodo(event) {
+      event.preventDefault();
+  
+      const inputField = document.querySelector("#new-todo");
+      const newTodoTitle = inputField.value;
+      createTodo(newTodoTitle);
+  
+      // reset the value of the inputField to make it empty and
+      // ready to create new todos
+      inputField.value = null;
+  
+      updateCounters();
+    });
+
+    function cleanUpDoneTodos() {
+        // get all the "done" items""
+        const doneItems = document.querySelectorAll(".completed");
+        // loop through the "done" todo items
+        for (let i = 0; i < doneItems.length; i++) {
+            doneItems[i].remove();
+          // and remove them from the DOM
+        }
+      
+        // update the counters
+        updateCounters();
+      }
+      
+      // retrieve the link
+      document.getElementById("clean-up").addEventListener("click", cleanUpDoneTodos);
+
+      // add an event listener for a click on the link to the cleanUpDoneTodos function
