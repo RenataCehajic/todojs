@@ -27,6 +27,7 @@ function updateCounters() {
     } else {
       // change the checkbox so that it shows up as todo
       checkbox.parentElement.parentElement.className = "todo"; 
+      checkbox.style.color = colorPicker; 
     }
     // update the counters, now that we have updated the checkbox
     updateCounters();
@@ -41,14 +42,7 @@ function updateCounters() {
     checkboxes[i].addEventListener("change", toggleDone);
   }
 
-  document
-  .querySelector("form")
-  .addEventListener("submit", function addNewTodo(event) {
-    event.preventDefault();
-    console.log("hello");
-  });
-
-  function createTodo(title) {
+  function createTodo(title, colorPicker, datePicker) {
     // create a label
     const label = document.createElement("label");
     // create a checkbox
@@ -64,10 +58,16 @@ function updateCounters() {
     const labelText = document.createTextNode(" " + title);
     // and add the text node to the label
     label.appendChild(labelText);
-  
+
+    const dateSpan = document.createElement("span"); 
+    dateSpan.innerHTML = datePicker; 
+
+    label.appendChild(dateSpan); 
+    
     // create a list item
     const listItem = document.createElement("li");
     listItem.className = "todo";
+    listItem.style.color = colorPicker; 
     // and add the label to it
     listItem.appendChild(label);
   
@@ -82,8 +82,11 @@ function updateCounters() {
       event.preventDefault();
   
       const inputField = document.querySelector("#new-todo");
+      let colorPicker = document.getElementById("color").value; 
+      let datePicker = document.getElementById("start").value; 
+      
       const newTodoTitle = inputField.value;
-      createTodo(newTodoTitle);
+      createTodo(newTodoTitle, colorPicker, datePicker);
   
       // reset the value of the inputField to make it empty and
       // ready to create new todos
@@ -109,3 +112,4 @@ function updateCounters() {
       document.getElementById("clean-up").addEventListener("click", cleanUpDoneTodos);
 
       // add an event listener for a click on the link to the cleanUpDoneTodos function
+    
